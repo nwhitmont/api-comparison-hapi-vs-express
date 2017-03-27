@@ -12,5 +12,8 @@
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "mongoose": "^4.9.2"
+  },
+  "scripts": {
+    "start": "gulp"
   }
 }
