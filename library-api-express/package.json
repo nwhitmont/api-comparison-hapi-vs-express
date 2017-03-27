@@ -1,0 +1,16 @@
+{
+  "name": "library-api-express",
+  "version": "1.0.0",
+  "description": "Example API project written with Express",
+  "main": "server.js",
+  "repository": "https://github.com/nwhitmont/api-comparison-hapi-vs-express",
+  "author": "Nils Whitmont <nils.whitmont@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^3.18.0",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "mongoose": "^4.9.2"
+  }
+}

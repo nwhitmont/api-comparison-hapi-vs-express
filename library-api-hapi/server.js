@@ -5,7 +5,7 @@ const Hapi = require('hapi'); // server module
 const Good = require('good'); // logging module
 const Joi = require('joi'); // input validation module
 const mongoose = require('mongoose');
-const db = mongoose.connect('mongodb://localhost/bookAPI');
+const db = mongoose.connect('mongodb://localhost/libraryAPI');
 
 // MODELS
 const Book = require('./models/book');
@@ -32,7 +32,7 @@ server.route({
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
-        reply('Hapi API is up!');
+        reply('Library API (Hapi) is up!');
     }
 });
 
@@ -43,7 +43,6 @@ server.route({
         if(request.params.id) {
             Book.findById(request.params.id, function(err, book) {
                 if(err) {
-                    //console.log(err)
                     reply(err);
                 } else {
                     reply(book);
@@ -52,7 +51,6 @@ server.route({
         } else {
             Book.find(function(err, books) {
                 if(err) {
-                    //console.log(err)
                     reply(err);
                 } else {
                     reply(books);
@@ -62,13 +60,6 @@ server.route({
     }
 });
 
-server.route({
-    method: 'GET',
-    path: '/{name}',
-    handler: function (request, reply) {
-        reply('Greetings, ' + encodeURIComponent(request.params.name) + '!');
-    }
-});
 
 // register middleware plugins
 server.register({
