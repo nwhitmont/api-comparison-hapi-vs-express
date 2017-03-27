@@ -36,7 +36,7 @@ server.get('/', function defaultRouterHandler(request, response) {
 });
 
 server.listen(port, function startServer() {
-    console.log('Server running at http://localhost:' + port);
+    console.log(' Dev Server running at http://localhost:' + port);
 });
 
 // END OF LINE
