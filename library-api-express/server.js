@@ -15,6 +15,8 @@ var port = process.env.PORT || 3003;
 
 // MODELS
 var Book = require('./models/book');
+var AudioBook = require('./models/audioBook');
+
 
 // init body-parser middleware
 server.use(bodyParser.json()); // handle JSON objects
@@ -56,9 +58,33 @@ bookRouter.route('/books/:id')
         }
     );
 
-server.use('/api', bookRouter);
+// setup /audiobooks router
+var audioBookRouter = express.Router();
 
-server.get('/', function defaultRouterHandler(request, response) {
+// configure route handlers
+audioBookRouter.route('/audiobooks')
+    .get(
+        function getAllAudioBooks(request, response) {
+            AudioBook.find(function(err, audioBooks) {
+                if(!err) response.json(audioBooks);
+                else response.status(500).send(err);
+            });
+        }
+    );
+
+audioBookRouter.route('/audiobooks/:isbn')
+    .get(
+        function getAudioBookByIsbn(request, response) {
+            AudioBook.find({isbn: request.params.isbn}, function(err, audioBook) {
+                if(!err) response.json(audioBook);
+                else response.status(500).send(err);
+            });
+        }
+    );
+
+server.use('/api', [bookRouter, audioBookRouter]);
+
+server.get('/', function defaultRouteHandler(request, response) {
     response.send('Library API (Express) is up!');
 });
 
