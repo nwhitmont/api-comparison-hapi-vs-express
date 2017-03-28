@@ -9,13 +9,12 @@ var mongoose = require('mongoose'); // MongoDB ORM module
 var bodyParser = require('body-parser'); // express body parser middleware
 
 // LOCAL VARS
-var db = mongoose.connect('mongodb://localhost/libraryAPI');
+var db = mongoose.connect('mongodb://localhost:27017/libraryAPI');
 var server = express();
 var port = process.env.PORT || 3003;
 
 // MODELS
 var Book = require('./models/book');
-var AudioBook = require('./models/audioBook');
 
 
 // init body-parser middleware
@@ -58,31 +57,7 @@ bookRouter.route('/books/:id')
         }
     );
 
-// setup /audiobooks router
-var audioBookRouter = express.Router();
-
-// configure route handlers
-audioBookRouter.route('/audiobooks')
-    .get(
-        function getAllAudioBooks(request, response) {
-            AudioBook.find(function(err, audioBooks) {
-                if(!err) response.json(audioBooks);
-                else response.status(500).send(err);
-            });
-        }
-    );
-
-audioBookRouter.route('/audiobooks/:isbn')
-    .get(
-        function getAudioBookByIsbn(request, response) {
-            AudioBook.find({isbn: request.params.isbn}, function(err, audioBook) {
-                if(!err) response.json(audioBook);
-                else response.status(500).send(err);
-            });
-        }
-    );
-
-server.use('/api', [bookRouter, audioBookRouter]);
+server.use('/api', bookRouter);
 
 server.get('/', function defaultRouteHandler(request, response) {
     response.send('Library API (Express) is up!');
